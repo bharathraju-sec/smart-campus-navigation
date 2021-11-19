@@ -1,0 +1,40 @@
+{
+  "rules": {
+    "buildings": {
+      ".read": true,
+      ".write": false
+    },
+    "paths": {
+      ".read": true,
+      ".write": false
+    },
+    "reports": {
+      ".read": false,
+      "$reportId": {
+        ".write": "!data.exists()",
+        ".validate": "newData.hasChildren(['buildingId', 'lat', 'lng', 'createdAt'])",
+        "buildingId": {
+          ".validate": "newData.isString() && root.child('buildings').child(newData.val()).exists()"
+        },
+        "lat": {
+          ".validate": "newData.isNumber() && newData.val() >= -90 && newData.val() <= 90"
+        },
+        "lng": {
+          ".validate": "newData.isNumber() && newData.val() >= -180 && newData.val() <= 180"
+        },
+        "accuracy": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "note": {
+          ".validate": "newData.isString() && newData.val().length <= 200"
+        },
+        "createdAt": {
+          ".validate": "newData.val() === now"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="theme-color" content="#1565c0">
+    <title>HU Smart Campus</title>
+
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="img/icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<header class="app-bar">
+    <button class="icon-btn" id="btnBack" aria-label="Back" hidden>&#8592;</button>
+    <h1 id="appTitle">HU Smart Campus</h1>
+    <button class="icon-btn" id="btnLocate" aria-label="Centre on my location" title="My location">&#9678;</button>
+    <button class="icon-btn" id="btnRefresh" aria-label="Reload buildings" title="Reload" hidden>&#8635;</button>
+</header>
+
+<div id="netStatus" class="net-banner" role="status" hidden>You are offline - showing saved data</div>
+
+<main id="views">
+
+    <!-- ================= MAP ================= -->
+    <section class="view view-map" data-view="map">
+        <div id="map"></div>
+        <div id="gpsStatus" class="gps-status">Waiting for GPS...</div>
+        <div id="mapError" class="map-error" hidden></div>
+
+        <!-- directions shown on top of the map -->
+        <div id="mapRoute" class="map-route" hidden>
+            <button class="map-route-close" id="btnCloseRoute" aria-label="Close directions">&times;</button>
+            <div id="mapRouteSummary"></div>
+            <details open>
+                <summary>Directions</summary>
+                <ol class="steps" id="mapRouteSteps"></ol>
+            </details>
+        </div>
+    </section>
+
+    <!-- ================= BUILDINGS / SEARCH ================= -->
+    <section class="view" data-view="buildings" hidden>
+        <div class="search-bar">
+            <input type="search" id="buildingSearch" placeholder="Search faculty, course or office (e.g. BCA, LLB)..."
+                   aria-label="Search buildings" autocomplete="off">
+        </div>
+        <div class="chips" id="categoryChips" role="tablist" aria-label="Categories"></div>
+        <ul class="list" id="buildingList">
+            <li class="list-empty">Loading...</li>
+        </ul>
+        <p class="data-source" id="dataSource"></p>
+    </section>
+
+    <!-- ================= BUILDING DETAIL ================= -->
+    <section class="view" data-view="building" hidden>
+        <div class="card">
+            <h2 id="detailName"></h2>
+            <p><span id="detailCode" class="badge"></span> <span id="detailCategory" class="category"></span></p>
+            <p id="detailDesc"></p>
+            <p id="detailApprox" class="approx-note" hidden>Map position is approximate.</p>
+
+            <table class="info-table">
+                <tr><th>Floors</th><td id="detailFloors"></td></tr>
+                <tr><th>Timings</th><td id="detailHours"></td></tr>
+                <tr><th>Courses / Facilities</th><td id="detailDepts"></td></tr>
+                <tr><th>Distance</th><td id="detailDistance">-</td></tr>
+            </table>
+
+            <button class="btn" id="btnShowOnMap">Show on Map</button>
+            <button class="btn btn-primary" id="btnDirections">Get Walking Directions</button>
+            <button class="btn btn-link" id="btnReport">Report incorrect location</button>
+
+            <form id="reportForm" class="report-form" hidden>
+                <p class="hint">Stand at the entrance of this building and send your GPS
+                   position. It will be used to correct the map.</p>
+                <label for="reportNote">Note (optional)</label>
+                <textarea id="reportNote" maxlength="200" rows="2"
+                          placeholder="e.g. entrance is behind the library"></textarea>
+                <p class="hint" id="reportGps"></p>
+                <button type="submit" class="btn btn-primary" id="btnSendReport">Send my location</button>
+                <p class="report-result" id="reportResult" role="status"></p>
+            </form>
+        </div>
+    </section>
+
+    <!-- ================= ROUTE ================= -->
+    <section class="view" data-view="route" hidden>
+        <div id="routeSummary" class="route-summary"></div>
+        <ol class="list steps" id="routeSteps"></ol>
+        <p class="algo-note" id="routeAlgo"></p>
+        <button class="btn" id="btnRouteMap">View route on map</button>
+    </section>
+
+    <!-- ================= ABOUT ================= -->
+    <section class="view" data-view="about" hidden>
+        <div class="card">
+            <h2>Smart Campus Navigation</h2>
+            <p><b>Himalayan University</b><br>
+               Jullang Village, Near Central Jail, Itanagar<br>
+               Distt. Papum Pare, Arunachal Pradesh - 791111</p>
+            <p>Find any faculty or office on campus, see your live GPS position and get walking
+               directions to where you need to go.</p>
+            <ul>
+                <li>Leaflet + OpenStreetMap</li>
+                <li>HTML5 Geolocation / Cordova Geolocation plugin</li>
+                <li>Dijkstra's shortest path over the campus footpath graph</li>
+                <li>Firebase Realtime Database</li>
+                <li>Progressive Web App (works offline after first load)</li>
+            </ul>
+            <p class="data-source">B.Tech (Computer Science &amp; Engineering) Mini Project</p>
+        </div>
+    </section>
+
+</main>
+
+<nav class="tab-bar" aria-label="Main">
+    <a href="#/map" data-tab="map">&#8982;<span>Map</span></a>
+    <a href="#/buildings" data-tab="buildings">&#9776;<span>Buildings</span></a>
+    <a href="#/about" data-tab="about">&#9432;<span>About</span></a>
+</nav>
+
+<!-- Firebase JS SDK v7 -->
+<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-database.js"></script>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="cordova.js"></script>
+<script src="js/config.js"></script>
+<script src="js/data.js"></script>
+<script src="js/geo.js"></script>
+<script src="js/graph.js"></script>
+<script src="js/db.js"></script>
+<script src="js/map.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

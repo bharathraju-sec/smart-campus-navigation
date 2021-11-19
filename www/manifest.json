@@ -1,0 +1,19 @@
+{
+  "name": "HU Smart Campus",
+  "short_name": "HU Campus",
+  "description": "Campus navigation for Himalayan University, Itanagar",
+  "start_url": "./index.html#/map",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f3f5f8",
+  "theme_color": "#1565c0",
+  "icons": [
+    {
+      "src": "img/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

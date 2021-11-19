@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget id="com.college.smartcampus"
+        version="1.0.0"
+        xmlns="http://www.w3.org/ns/widgets"
+        xmlns:cdv="http://cordova.apache.org/ns/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <name>HU Smart Campus</name>
+    <description>
+        GPS based campus navigation app for Himalayan University, Itanagar. Find faculties and offices, see where you are
+        and get walking directions around the campus.
+    </description>
+    <author email="" href="">Student Project</author>
+
+    <content src="index.html" />
+
+    <!-- OpenStreetMap + Firebase need network access -->
+    <access origin="*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="geo:*" />
+
+    <preference name="Orientation" value="portrait" />
+    <preference name="DisallowOverscroll" value="true" />
+
+    <platform name="android">
+        <allow-intent href="market:*" />
+        <preference name="android-minSdkVersion" value="22" />
+        <preference name="android-targetSdkVersion" value="29" />
+        <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
+            <application android:usesCleartextTraffic="false" />
+        </edit-config>
+    </platform>
+
+    <!-- plugins are listed in package.json (Cordova 10) -->
+</widget>
