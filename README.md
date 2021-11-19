@@ -66,28 +66,28 @@ Subjects from the B.Tech CSE scheme that this project applies:
 
 ```
 smart campus navigation app/
-â”œâ”€â”€ config.xml              # Cordova config
-â”œâ”€â”€ package.json            # Cordova platforms + plugins, npm scripts
-â”œâ”€â”€ firebase/
-â”‚   â”œâ”€â”€ campus-data.json    # buildings + footpaths to import into Firebase
-â”‚   â””â”€â”€ rules.json          # database security + validation rules
-â”œâ”€â”€ tests/
-â”‚   â”œâ”€â”€ geo.test.js         # distance, bearing, formatting
-â”‚   â””â”€â”€ graph.test.js       # min-heap, Dijkstra, campus graph
-â””â”€â”€ www/
-    â”œâ”€â”€ index.html          # app shell: app bar, views, bottom tab bar
-    â”œâ”€â”€ manifest.json       # PWA manifest
-    â”œâ”€â”€ sw.js               # service worker (offline app shell)
-    â”œâ”€â”€ img/icon.svg
-    â”œâ”€â”€ css/app.css
-    â””â”€â”€ js/
-        â”œâ”€â”€ config.js       # API key, Firebase config, campus centre
-        â”œâ”€â”€ data.js         # buildings + footpaths (fallback)
-        â”œâ”€â”€ geo.js          # GPS tracking, Haversine distance, bearing
-        â”œâ”€â”€ graph.js        # footpath graph, min-heap, Dijkstra shortest path
-        â”œâ”€â”€ db.js           # Firebase realtime listener, offline cache, location reports
-        â”œâ”€â”€ map.js          # Leaflet map, markers, directions
-        â””â”€â”€ app.js          # router, views, search, events
+├── config.xml              # Cordova config
+├── package.json            # Cordova platforms + plugins, npm scripts
+├── firebase/
+│   ├── campus-data.json    # buildings + footpaths to import into Firebase
+│   └── rules.json          # database security + validation rules
+├── tests/
+│   ├── geo.test.js         # distance, bearing, formatting
+│   └── graph.test.js       # min-heap, Dijkstra, campus graph
+└── www/
+    ├── index.html          # app shell: app bar, views, bottom tab bar
+    ├── manifest.json       # PWA manifest
+    ├── sw.js               # service worker (offline app shell)
+    ├── img/icon.svg
+    ├── css/app.css
+    └── js/
+        ├── config.js       # Firebase config, campus centre, test location
+        ├── data.js         # buildings + footpaths (fallback)
+        ├── geo.js          # GPS tracking, Haversine distance, bearing
+        ├── graph.js        # footpath graph, min-heap, Dijkstra shortest path
+        ├── db.js           # Firebase realtime listener, offline cache, location reports
+        ├── map.js          # Leaflet map, markers, directions
+        └── app.js          # router, views, search, events
 ```
 
 ## Setup
